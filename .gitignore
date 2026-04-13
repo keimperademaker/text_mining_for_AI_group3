@@ -1,0 +1,8 @@
+__pycache__
+.ipynb_checkpoints/
+*.ps
+*.svg
+.DS_Store
+notebooks
+KEY*.ipynb
+lab_sessions/lab3/*/
