@@ -1,0 +1,11 @@
+sentence id	text	sentiment	topic	predicted_topic	predicted_topic_score	score_movie	score_restaurant	score_book
+0	It took eight years for Warner Brothers to recover from the disaster that was this movie.	negative	movie	movie	0.9941	0.9941	0.0031	0.0027
+1	All the New York University students love this diner in Soho so it makes for a fun young atmosphere.	positive	restaurant	restaurant	0.9869	0.0038	0.9869	0.0093
+2	This Italian place is really trendy but they have forgotten about the most important part of a restaurant, the food.	negative	restaurant	restaurant	0.9824	0.0043	0.9824	0.0133
+3	In conclusion, my review of this book would be: I like Jane Austen and understand why she is famous.	positive	book	book	0.9876	0.0035	0.0089	0.9876
+4	The story of this movie is focused on Carl Brashear played by Cuba Gooding Jr. who wants to be the first African American deep sea diver in the Navy.	neutral	movie	movie	0.9935	0.9935	0.0035	0.003
+5	Chris O'Donnell stated that while filming for this movie, he felt like he was in a toy commercial.	neutral	movie	movie	0.9713	0.9713	0.0183	0.0104
+6	My husband and I moved to Amsterdam 6 years ago and for as long as we have lived here, Blauwbrug has been our favorite place to eat!	positive	restaurant	restaurant	0.9633	0.0155	0.9633	0.0212
+7	Dame Maggie Smith performed her role excellently, as she does in all her movies.	positive	movie	movie	0.9679	0.9679	0.0189	0.0132
+8	The new movie by Mr. Kruno was shot in New York, but the story takes place in Los Angeles.	neutral	movie	movie	0.9677	0.9677	0.0191	0.0131
+9	I always have loved English novels, but I just couldn't get into this one.	negative	book	book	0.9663	0.0084	0.0253	0.9663
