@@ -96,7 +96,7 @@ def evaluate_topic(df):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--test", required=True, help="Path to Sentiment-topic-test.tsv")
+    parser.add_argument("--test", required=False, help="Path to Sentiment-topic-test.tsv")
     parser.add_argument(
         "--tweets",
         default="lab_sessions/lab3/my_tweets.json",
@@ -107,10 +107,54 @@ def main():
 
     os.makedirs(os.path.dirname(args.out), exist_ok=True)
 
-    test = load_test(args.test)
-    train_texts, train_labels = load_tweet_train(args.tweets)
+    # If --test not provided, try to find the test file in common locations
+    def find_test_file():
+        candidates = []
+        # project-relative
+        candidates.append(os.path.join(os.getcwd(), "Sentiment-topic-test.tsv"))
+        # user's Downloads
+        user_downloads = os.path.join(os.path.expanduser("~"), "Downloads")
+        candidates.append(os.path.join(user_downloads, "Sentiment-topic-test.tsv"))
+        candidates.append(os.path.join(user_downloads, "text_mining_project", "Sentiment-topic-test.tsv"))
+        candidates.append(os.path.join(user_downloads, "text_mining_for_AI_group3-main", "Sentiment-topic-test.tsv"))
+        for c in candidates:
+            if os.path.exists(c):
+                return c
+        return None
+
+    test_path = args.test if args.test else find_test_file()
+    if not test_path:
+        raise RuntimeError("Test file not provided and could not be found. Pass --test <path> or place Sentiment-topic-test.tsv in Downloads or project root.")
+
+    test = load_test(test_path)
+
+    # locate tweet training file if not provided or missing
+    def find_tweets_file(provided):
+        candidates = []
+        if provided:
+            candidates.append(provided)
+        # project-relative
+        candidates.append(os.path.join(os.getcwd(), "lab_sessions", "lab3", "my_tweets.json"))
+        # known repo location (if script run from other folder)
+        repo_root = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+        candidates.append(os.path.join(repo_root, "lab_sessions", "lab3", "my_tweets.json"))
+        # user's Downloads
+        user_downloads = os.path.join(os.path.expanduser("~"), "Downloads")
+        candidates.append(os.path.join(user_downloads, "my_tweets.json"))
+        candidates.append(os.path.join(user_downloads, "text_mining_for_AI_group3-main", "lab_sessions", "lab3", "my_tweets.json"))
+        candidates.append(os.path.join(user_downloads, "text_mining_project", "my_tweets.json"))
+        for c in candidates:
+            if c and os.path.exists(c):
+                return c
+        return None
+
+    tweets_path = find_tweets_file(args.tweets)
+    if not tweets_path:
+        raise RuntimeError("Tweet training file not provided and could not be found. Pass --tweets <path> or place my_tweets.json in lab_sessions/lab3 or Downloads.")
+
+    train_texts, train_labels = load_tweet_train(tweets_path)
     if not train_texts:
-        raise RuntimeError(f"No training tweets found at {args.tweets}")
+        raise RuntimeError(f"No training tweets found at {tweets_path}")
 
     vec, clf = train_sentiment_classifier(train_texts, train_labels)
 
